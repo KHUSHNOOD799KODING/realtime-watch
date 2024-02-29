@@ -1,0 +1,250 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Analog Clock - 2</title>
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+
+            /* align-items: center; */
+            /* justify-content: center; */
+            /* height: 100vh;
+            margin: 0; */
+            background-color: rgb(255, 255, 255);
+        }
+
+        .one,
+        .two,
+        .zero {
+            /* display: inline-block; */
+            position: relative;
+            width: 350px;
+            height: 350px;
+            margin: 50px;
+            border: 6px solid #c508ff;
+            box-shadow: 0px 0px 20px rgb(51, 51, 51);
+            border-radius: 50%;
+            z-index: -9;
+        }
+
+        #clock0 {
+            background-color: rgb(241, 250, 175);
+        }
+
+        #clock1 {
+            background-color: rgb(1, 84, 94);
+        }
+
+        #clock2 {
+            background-color: rgb(238, 88, 133);
+        }
+
+
+
+        .hand {
+            position: absolute;
+            transform-origin: 50% 100%;
+            transition: transform 0.5s cubic-bezier(0.4, 2.2, 0.4, 0.9);
+            /* top: px; */
+            /* left: 96px; */
+            display: inline-block;
+            /* display: inline-block; */
+        }
+
+        #hourHand,
+        #hourHand2,
+        #hourHand3 {
+            width: 8px;
+            background: linear-gradient(rgb(0, 255, 128), rgb(2, 114, 49));
+            height: 90px;
+            top: 82px;
+            left: 165px;
+            z-index: 2;
+            /* display: none; */
+            /* font-weight: bolder; */
+        }
+
+        #minuteHand,
+        #minuteHand2,
+        #minuteHand3 {
+            width: 4px;
+            height: 115px;
+            background: linear-gradient(rgb(235, 235, 0), orange);
+            top: 58px;
+            left: 167px;
+            z-index: 3;
+            /* display: none; */
+            /* font-weight: bold; */
+        }
+
+        #secondHand,
+        #secondHand2,
+        #secondHand3 {
+            width: 2px;
+            height: 140px;
+            top: 32px;
+            left: 168px;
+            background: linear-gradient(darkorange, rgb(185, 0, 0));
+            z-index: 9;
+            transition: all;
+            /* display: none; */
+        }
+
+        #secondHand2 {
+            transition: all 1s;
+        }
+
+        #secondHand3 {
+            transition: all .1s;
+        }
+
+        .xyz {
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+            background-color: black;
+            top: 162px;
+            left: 159px;
+            z-index: -5;
+            position: relative;
+        }
+
+        @media (max-width:800px) {
+
+            .zero {
+                min-height: 350px;
+                min-width: 350px;
+                margin: 15px;
+            }
+
+            .bx {
+                margin: 15px;
+                padding: 15px;
+            }
+        }
+
+        .forback {
+            /* display: block; */
+            width: 350px;
+            border: 2px solid blueviolet;
+        }
+
+        .forwatch {
+            /* display: block; */
+            width: 350px;
+            border: 2px solid greenyellow;
+
+        }
+
+        .bx {
+            display: flex;
+            justify-content: space-around;
+            margin: 40px;
+            padding: 40px;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div id="clock0" class="zero">
+        <div id="hourHand" class="hand"></div>
+        <div id="minuteHand" class="hand"></div>
+        <div id="secondHand" class="hand"></div>
+        <div class="xyz"></div>
+    </div>
+
+
+    <div class="forback bx" id="fbk">
+        <input id="fk" type="text" value="" placeholder="enter-color-for-background">
+        <button class="btn1" onclick="background()">Change-Body-Color</button>
+    </div>
+
+    <div class="forwatch bx" id="fwch">
+        <input id="fc" type="text" value="" placeholder="enter-color-for-watch">
+        <button class="btn2" onclick="watch()">Change-Watch-Color</button>
+
+    </div>
+
+    <!-- <div id="clock1" class="one">
+        <div id="hourHand2" class="hand"></div>
+        <div id="minuteHand2" class="hand"></div>
+        <div id="secondHand2" class="hand"></div>
+        <div class="xyz"></div>
+    </div>
+
+    <div id="clock2" class="two">
+        <div id="hourHand3" class="hand"></div>
+        <div id="minuteHand3" class="hand"></div>
+        <div id="secondHand3" class="hand"></div>
+        <div class="xyz"></div>
+    </div> -->
+
+    <script>
+        function updateClock() {
+            const now = new Date();
+            const hours = now.getHours() % 12; // Convert to 12-hour format
+            const minutes = now.getMinutes();
+            const seconds = now.getSeconds();
+
+            const hourDeg = (hours + minutes / 60) * 30; // 30 degrees per hour
+            const minuteDeg = (minutes + seconds / 60) * 6; // 6 degrees per minute
+            const secondDeg = seconds * 6; // 6 degrees per second
+
+            document.getElementById("hourHand").style.transform = `rotate(${hourDeg}deg)`;
+            document.getElementById("minuteHand").style.transform = `rotate(${minuteDeg}deg)`;
+            document.getElementById("secondHand").style.transform = `rotate(${secondDeg}deg)`;
+
+            document.getElementById("hourHand2").style.transform = `rotate(${hourDeg}deg)`;
+            document.getElementById("minuteHand2").style.transform = `rotate(${minuteDeg}deg)`;
+            document.getElementById("secondHand2").style.transform = `rotate(${secondDeg}deg)`;
+
+            document.getElementById("hourHand3").style.transform = `rotate(${hourDeg}deg)`;
+            document.getElementById("minuteHand3").style.transform = `rotate(${minuteDeg}deg)`;
+            document.getElementById("secondHand3").style.transform = `rotate(${secondDeg}deg)`;
+        }
+
+        // Update the clock every second
+        setInterval(updateClock, 1000);
+
+        // Initial call to set the initial clock state
+        updateClock();
+
+
+        function background() {
+
+            let body = document.querySelector("body");
+            let fk = document.getElementById("fk").value;
+            if (body.style.backgroundColor != fk) {
+                body.style.backgroundColor = fk
+            } else {
+                body.style.backgroundColor = "white";
+            }
+
+        }
+
+        function watch() {
+
+            let fc = document.getElementById("fc").value;
+            let clock = document.getElementById("clock0");
+            if (clock.style.backgroundColor != fc) {
+                clock.style.backgroundColor = fc
+            } else {
+                clock.style.backgroundColor = "cornsilk"
+            }
+
+        }
+
+    </script>
+
+</body>
+
+</html>
